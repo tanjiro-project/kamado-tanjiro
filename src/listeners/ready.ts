@@ -16,11 +16,11 @@ export class readyEvent extends Listener {
         });
         const developerId = await this.container.client.application?.fetch();
         if (developerId?.owner instanceof Team) {
-            for (let [ownerId] of developerId?.owner.members) {
+            for (const [ownerId] of developerId?.owner.members) {
                 if (!botOwners.includes(ownerId)) botOwners.push(ownerId);
                 continue;
             }
-        } else if (!botOwners.includes(developerId?.owner?.id!)) botOwners.push(developerId?.owner?.id!)
+        } else if (!botOwners.includes(developerId?.owner?.id!)) { botOwners.push(developerId?.owner?.id!); }
         return this.container.logger.info(chalk.green(`[CLIENT]: ${this.container.client.user?.username.toUpperCase()} CONNECTED TO DISCORD`));
     }
 }

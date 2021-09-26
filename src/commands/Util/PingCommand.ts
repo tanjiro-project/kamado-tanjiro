@@ -5,7 +5,7 @@ import { Message } from "discord.js";
 @ApplyOptions<CommandOptions>({
     name: "ping",
     description: "ping pong with the bot",
-    requiredClientPermissions: ['SEND_MESSAGES'],
+    requiredClientPermissions: ["SEND_MESSAGES"]
 })
 
 export class ClientCommand extends Command {

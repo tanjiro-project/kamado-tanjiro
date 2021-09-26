@@ -6,12 +6,11 @@ import { botEmbedColor } from "../../config";
 @ApplyOptions<CommandOptions>({
     name: "help",
     description: "get bot help command",
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
 })
 
 export class clientCommand extends Command {
     async run(message: Message, args: Args) {
-
         const userArgument = await args.restResult("string");
         if (userArgument.success) {
             const command = this.container.stores.get("commands").get(userArgument.value);

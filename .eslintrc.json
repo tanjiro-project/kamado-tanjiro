@@ -15,5 +15,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "sort-keys": "off",
+        "no-unsafe-optional-chaining": "off"
     }
 }

@@ -9,7 +9,7 @@ import { codeBlock } from "@discordjs/builders";
     quotes: [],
     description: "owo whats this",
     preconditions: ["ownerOnly"],
-    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"]
 })
 
 export class ClientCommand extends Command {

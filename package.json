@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "name": "discord-bot-sapphire-template",
-  "description": "A sapphire framework discord bot template written in typescript.",
+  "name": "kamado-tanjiro",
+  "description": "A discord moderation bot.",
   "dependencies": {
     "@discordjs/builders": "^0.5.0",
     "@sapphire/decorators": "^2.2.0",
