@@ -4,10 +4,11 @@ import { Message } from "discord.js";
 
 @ApplyOptions<CommandOptions>({
     name: "ping",
-    description: "ping pong with the bot"
+    description: "ping pong with the bot",
+    requiredClientPermissions: ['SEND_MESSAGES'],
 })
 
-export class PingCommand extends Command {
+export class ClientCommand extends Command {
     async run(message: Message) {
         const msg = await message.channel.send("Pong");
         await msg.edit(`:ping_pong: | ${msg.createdTimestamp - message.createdTimestamp} ms, ${this.container.client.ws.ping} ms`);

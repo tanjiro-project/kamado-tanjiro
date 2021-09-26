@@ -8,10 +8,11 @@ import { codeBlock } from "@discordjs/builders";
     name: "eval",
     quotes: [],
     description: "owo whats this",
-    preconditions: ["ownerOnly"]
+    preconditions: ["ownerOnly"],
+    requiredClientPermissions: ["SEND_MESSAGES", "EMBED_LINKS"],
 })
 
-export class PingCommand extends Command {
+export class ClientCommand extends Command {
     async run(message: Message, args: Args) {
         const msg = message; /* eslint-disable-line */
         const userArgument = await args.restResult("string");
@@ -26,9 +27,9 @@ export class PingCommand extends Command {
             msg.channel.send({
                 content: codeBlock("js", evaled)
             });
-        } catch (e) {
+        } catch (e: any) {
             msg.channel.send({
-                content: codeBlock("js", e)
+                content: codeBlock("js", e.message)
             });
         }
     }

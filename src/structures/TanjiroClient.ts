@@ -3,7 +3,7 @@ import { Intents } from "discord.js";
 import { join } from "path";
 import { botPrefix } from "../config";
 
-export class BotClient extends SapphireClient {
+export class TanjiroClient extends SapphireClient {
     public constructor(clientOptions?: SapphireClientOptions) {
         super({
             allowedMentions: {
