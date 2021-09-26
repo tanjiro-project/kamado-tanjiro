@@ -35,13 +35,13 @@ export class readyEvent extends Listener {
             return process.exit(1);
         }).then(async (c: any) => {
             this.container.logger.info("Connected to MongoDB cloud");
-            for (let database of Object.values(this.container.client.databases)) {
+            for (const database of Object.values(this.container.client.databases)) {
                 database._initRepos();
                 continue;
             }
             return c;
         });
-        
+
 
         return this.container.logger.info(chalk.green(`[CLIENT]: ${this.container.client.user?.username.toUpperCase()} CONNECTED TO DISCORD`));
     }
