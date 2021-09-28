@@ -20,8 +20,14 @@ export class Guild {
     public auditLogChannel!: Snowflake;
 
     @Column("string")
-    public enableAuditLog!: Snowflake;
+    public enableAuditLog!: boolean;
 
     @Column("string")
     public prefix = botPrefix;
+
+    @Column("string")
+    public welcomeLogChannel!: Snowflake;
+
+    @Column("string")
+    public enableWelcomeLog!: boolean;
 }
