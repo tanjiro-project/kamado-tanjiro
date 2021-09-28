@@ -17,6 +17,7 @@ export class TanjiroClient extends SapphireClient {
             caseInsensitivePrefixes: true,
             fetchPrefix: async msg => (await this.databases.guilds.get(msg.guildId!)).prefix,
             intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+            typing: true,
             ...clientOptions
         });
     }
