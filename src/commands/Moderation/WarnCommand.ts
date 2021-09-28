@@ -16,7 +16,7 @@ export class clientCommand extends SubCommandPluginCommand {
     public async runCmd(message: Message, args: Args) {
         const user = (await args.pickResult("member")).value ?? message.mentions.members?.filter(x => x.user !== this.container.client.user).first();
         const cases = crypto.randomBytes(3).toString("hex");
-        const reason = (await args.restResult("string")).value ?? `t!warn update --case=${cases} {reason}`;
+        const reason = (await args.restResult("string")).value ?? `${args.commandContext.commandPrefix}warn update --case=${cases} {reason}`;
         const guildDatabases = await this.container.client.databases.guilds.get(message.guildId!);
         if (!user) {
             return message.reply({
