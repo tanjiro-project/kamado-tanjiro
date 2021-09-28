@@ -6,7 +6,8 @@ import { botEmbedColor } from "../../config";
 
 @ApplyOptions<SubCommandPluginCommand.Options>({
     name: "setup",
-    subCommands: ["modlog", { input: "show", default: true }]
+    subCommands: ["modlog", { input: "show", default: true }],
+    requiredUserPermissions: ["MANAGE_GUILD"]
 })
 export class clientCommand extends SubCommandPluginCommand {
     public async show(message: Message) {
