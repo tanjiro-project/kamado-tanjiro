@@ -2,7 +2,7 @@ import { Snowflake } from "discord.js";
 import { Column, Entity, ObjectID, ObjectIdColumn, PrimaryColumn } from "typeorm";
 
 @Entity({ name: "warnCases" })
-export class Guild {
+export class warnCases {
     @ObjectIdColumn()
     public _id!: ObjectID;
 
@@ -16,11 +16,14 @@ export class Guild {
     public reason!: string;
 
     @Column("string")
-    public warnId!: string;
+    public warnCase!: string;
 
     @Column("string")
-    public executorId!: string
+    public executorId!: string;
 
     @Column("string")
-    public targetId!: string
+    public targetId!: Snowflake;
+
+    @Column("string")
+    public messageId!: Snowflake;
 }

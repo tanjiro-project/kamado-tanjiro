@@ -13,4 +13,12 @@ export class GuildDatabaseManager {
         await this.repository.save(data);
         return data;
     }
+
+    public async set(guild: Snowflake, key: keyof Guild, value: any): Promise<Guild> {
+        const data = (await this.repository.findOne({ guild })) ?? this.repository.create({ guild });
+        // @ts-ignore
+        data[key] = value;
+        await this.repository.save(data);
+        return data;
+    }
 }

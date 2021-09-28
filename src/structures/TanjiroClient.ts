@@ -3,6 +3,7 @@ import { Intents } from "discord.js";
 import { join } from "path";
 import { Connection } from "typeorm";
 import { GuildDatabaseManager } from "../databases/GuildDatabaseManager";
+import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
 
 export class TanjiroClient extends SapphireClient {
     public constructor(clientOptions?: SapphireClientOptions) {
@@ -22,14 +23,16 @@ export class TanjiroClient extends SapphireClient {
 
     public connection!: Connection;
     public databases = {
-        guilds: new GuildDatabaseManager()
+        guilds: new GuildDatabaseManager(),
+        warn: new WarnDatabaseManager()
     }
 }
 
 declare module "@sapphire/framework" {
     export interface SapphireClient {
         databases: {
-            guilds: GuildDatabaseManager
+            guilds: GuildDatabaseManager,
+            warn: WarnDatabaseManager
         }
         connection: Connection;
     }
