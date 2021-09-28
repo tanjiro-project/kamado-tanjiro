@@ -158,10 +158,10 @@ export class clientCommand extends SubCommandPluginCommand {
         const modLogChannel = this.container.client.channels.resolve(getUserCase.modlogChannel);
         if (modLogChannel && modLogChannel?.isText()) {
             const warnEmbed = await modLogChannel.messages.fetch(getUserCase.messageId).catch(() => null);
-            await warnEmbed?.delete().catch(() => null)
+            await warnEmbed?.delete().catch(() => null);
         }
         await this.container.client.databases.warn.deleteCase(message.guildId!, cases.value!);
-        
+
         return message.reply({
             embeds: [
                 new MessageEmbed()
