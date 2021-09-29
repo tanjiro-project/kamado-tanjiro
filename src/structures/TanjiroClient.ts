@@ -3,6 +3,7 @@ import { Intents } from "discord.js";
 import { join } from "path";
 import { Connection } from "typeorm";
 import { GuildDatabaseManager } from "../databases/GuildDatabaseManager";
+import { MutedUserDatabaseManager } from "../databases/MutedUserDatabaseManager";
 import { TempVoiceDatabaseManager } from "../databases/TemporaryChannelDatabaseManager";
 import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
 
@@ -27,7 +28,8 @@ export class TanjiroClient extends SapphireClient {
     public databases = {
         guilds: new GuildDatabaseManager(),
         warn: new WarnDatabaseManager(),
-        tempVoice: new TempVoiceDatabaseManager()
+        tempVoice: new TempVoiceDatabaseManager(),
+        mutedUser: new MutedUserDatabaseManager()
     }
 }
 
@@ -36,7 +38,8 @@ declare module "@sapphire/framework" {
         databases: {
             guilds: GuildDatabaseManager,
             warn: WarnDatabaseManager,
-            tempVoice: TempVoiceDatabaseManager
+            tempVoice: TempVoiceDatabaseManager,
+            mutedUser: MutedUserDatabaseManager
         }
         connection: Connection;
     }

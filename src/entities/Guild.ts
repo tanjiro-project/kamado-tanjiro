@@ -39,4 +39,7 @@ export class Guild {
 
     @Column("string")
     public tempVoiceName = "{user.username} Voice";
+
+    @Column("string")
+    public muteRoleId!: Snowflake;
 }
