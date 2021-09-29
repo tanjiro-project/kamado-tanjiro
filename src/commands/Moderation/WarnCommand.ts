@@ -54,6 +54,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 await this.container.client.databases.warn.set(message.guildId!, cases, message.author.id, user.id, msg.id, msg.channelId, "reason", reason);
             }
         }
+        if (!guildDatabases.enableModLog) await this.container.client.databases.warn.set(message.guildId!, cases, message.author.id, user.id, undefined!, undefined!, "reason", reason);
         return awaitedMessage.edit({
             embeds: [
                 new MessageEmbed()
