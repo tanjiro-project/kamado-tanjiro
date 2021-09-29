@@ -14,7 +14,7 @@ import crypto from "crypto";
 
 export class clientCommand extends SubCommandPluginCommand {
     public async runCmd(message: Message, args: Args) {
-        const user = (await args.pickResult("member")).value ?? message.mentions.members?.filter(x => x.user !== this.container.client.user).first();
+        const user = this.container.client.users.resolve((await args.pickResult("member")).value!) ?? this.container.client.users.resolve(message.mentions.members?.filter(x => x.user !== this.container.client.user).first()!) ?? await this.container.client.users.fetch((await args.pickResult("string")).value!).catch(() => undefined!);
         const cases = crypto.randomBytes(3).toString("hex");
         const reason = (await args.restResult("string")).value ?? `${args.commandContext.commandPrefix}warn update --case=${cases} {reason}`;
         const guildDatabases = await this.container.client.databases.guilds.get(message.guildId!);
@@ -22,7 +22,7 @@ export class clientCommand extends SubCommandPluginCommand {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input user id`)
+                        .setDescription(`⚠ | Please mention member / input valid user id`)
                         .setColor(botEmbedColor)
                 ]
             });
@@ -30,7 +30,7 @@ export class clientCommand extends SubCommandPluginCommand {
         const awaitedMessage = await message.channel.send({
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`⚠ | Trying to warn ${user?.user.username}`)
+                    .setDescription(`⚠ | Trying to warn ${user.username}`)
                     .setColor(botEmbedColor)
             ]
         });
@@ -41,10 +41,10 @@ export class clientCommand extends SubCommandPluginCommand {
                 const msg = await modLogChannel.send({
                     embeds: [
                         new MessageEmbed()
-                            .addField("**User**", `${user.id} | ${user.user.tag}`)
+                            .addField("**User**", `${user.id} | ${user.tag}`)
                             .addField("**Executor**", `${message.author.id} | ${message.author.tag}`)
                             .addField("**Timestamp**", `<t:${Date.now() / 1000 | 0}>`)
-                            .setThumbnail(user.user.displayAvatarURL())
+                            .setThumbnail(user.displayAvatarURL())
                             .setAuthor("WARNED", message.author.displayAvatarURL())
                             .addField("**Cases**", cases)
                             .addField("**Reason**", reason)
@@ -58,7 +58,7 @@ export class clientCommand extends SubCommandPluginCommand {
         return awaitedMessage.edit({
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`⚠ | Warned ${user.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[${reason}]\``}`)
+                    .setDescription(`⚠ | Warned ${user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[${reason}]\``}`)
                     .setFooter(`Case id: ${cases}`)
                     .setColor(botEmbedColor)
             ]

@@ -12,7 +12,7 @@ import { botEmbedColor } from "../../config";
 
 export class ClientCommand extends Command {
     async run(message: Message, args: Args) {
-        const user = this.container.client.users.resolve((await args.pickResult("member")).value!) ?? this.container.client.users.resolve(message.mentions.members?.filter(x => x.user !== this.container.client.user).first()!) ?? await this.container.client.users.fetch((await args.pickResult("string")).value!);
+        const user = this.container.client.users.resolve((await args.pickResult("member")).value!) ?? this.container.client.users.resolve(message.mentions.members?.filter(x => x.user !== this.container.client.user).first()!) ?? await this.container.client.users.fetch((await args.pickResult("string")).value!).catch(() => undefined!);
         const reason = (await args.restResult("string")).value ?? "No reason specified.";
         const guildDatabases = await this.container.client.databases.guilds.get(message.guildId!);
         if (!user) {
