@@ -15,7 +15,7 @@
     "typeorm": "^0.2.37"
   },
   "scripts": {
-    "start": "node -r dotenv/config dist",
+    "start": "ts-node -r dotenv/config src",
     "compile": "rimraf dist && tsc",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix",
@@ -33,6 +33,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.22.1",
     "rimraf": "^3.0.2",
+    "ts-node": "^10.2.1",
     "typescript": "^4.3.5"
   }
 }
