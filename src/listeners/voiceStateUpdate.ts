@@ -10,7 +10,7 @@ export class readyEvent extends Listener {
     async run(oldState: VoiceState, newState: VoiceState) {
         const guildDatabases = await this.container.client.databases.guilds.get(oldState.guild.id! ?? newState.guild.id!);
         const getOldTemporaryChannelDatabase = await this.container.client.databases.tempVoice.get(oldState?.guild.id!, oldState.channelId!);
-        const getNewTemporaryChannelDatabase = await this.container.client.databases.tempVoice.get(oldState?.guild.id!, oldState.channelId!);
+        const getNewTemporaryChannelDatabase = await this.container.client.databases.tempVoice.get(newState?.guild.id!, newState.channelId!);
         if (guildDatabases && guildDatabases.enableTempVoiceChannel) {
             const parentTempVoice = this.container.client.channels.resolve(guildDatabases.tempVoiceChannel);
             if (getNewTemporaryChannelDatabase && newState.channelId === getNewTemporaryChannelDatabase.channelId) {
