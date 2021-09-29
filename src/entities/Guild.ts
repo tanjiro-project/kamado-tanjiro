@@ -19,7 +19,7 @@ export class Guild {
     @Column("string")
     public auditLogChannel!: Snowflake;
 
-    @Column("string")
+    @Column("boolean")
     public enableAuditLog!: boolean;
 
     @Column("string")
@@ -28,13 +28,13 @@ export class Guild {
     @Column("string")
     public welcomeLogChannel!: Snowflake;
 
-    @Column("string")
+    @Column("boolean")
     public enableWelcomeLog!: boolean;
 
     @Column("string")
     public tempVoiceChannel!: Snowflake;
 
-    @Column("string")
+    @Column("boolean")
     public enableTempVoiceChannel!: boolean;
 
     @Column("string")
