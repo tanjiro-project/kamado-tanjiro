@@ -30,4 +30,13 @@ export class Guild {
 
     @Column("string")
     public enableWelcomeLog!: boolean;
+
+    @Column("string")
+    public tempVoiceChannel!: Snowflake;
+
+    @Column("string")
+    public enableTempVoiceChannel!: boolean;
+
+    @Column("string")
+    public tempVoiceName = "{user.username} Voice";
 }

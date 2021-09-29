@@ -3,6 +3,7 @@ import { Intents } from "discord.js";
 import { join } from "path";
 import { Connection } from "typeorm";
 import { GuildDatabaseManager } from "../databases/GuildDatabaseManager";
+import { TempVoiceDatabaseManager } from "../databases/TemporaryChannelDatabaseManager";
 import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
 
 export class TanjiroClient extends SapphireClient {
@@ -16,7 +17,7 @@ export class TanjiroClient extends SapphireClient {
             caseInsensitiveCommands: true,
             caseInsensitivePrefixes: true,
             fetchPrefix: async msg => (await this.databases.guilds.get(msg.guildId!)).prefix,
-            intents: [ Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES ],
+            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES],
             typing: true,
             ...clientOptions
         });
@@ -25,7 +26,8 @@ export class TanjiroClient extends SapphireClient {
     public connection!: Connection;
     public databases = {
         guilds: new GuildDatabaseManager(),
-        warn: new WarnDatabaseManager()
+        warn: new WarnDatabaseManager(),
+        tempVoice: new TempVoiceDatabaseManager()
     }
 }
 
@@ -33,7 +35,8 @@ declare module "@sapphire/framework" {
     export interface SapphireClient {
         databases: {
             guilds: GuildDatabaseManager,
-            warn: WarnDatabaseManager
+            warn: WarnDatabaseManager,
+            tempVoice: TempVoiceDatabaseManager
         }
         connection: Connection;
     }

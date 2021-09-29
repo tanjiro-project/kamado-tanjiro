@@ -17,5 +17,8 @@
     "rules": {
         "sort-keys": "off",
         "no-unsafe-optional-chaining": "off"
+    },
+    "globals": {
+        "NodeJS": true
     }
 }
