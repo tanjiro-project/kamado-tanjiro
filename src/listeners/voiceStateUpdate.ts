@@ -14,7 +14,7 @@ export class readyEvent extends Listener {
         if (guildDatabases && guildDatabases.enableTempVoiceChannel) {
             const parentTempVoice = this.container.client.channels.resolve(guildDatabases.tempVoiceChannel);
             if (getNewTemporaryChannelDatabase && newState.channelId === getNewTemporaryChannelDatabase.channelId) {
-                const timeoutCache = this.container.client.databases.tempVoice.cache.get(newState.channelId)
+                const timeoutCache = this.container.client.databases.tempVoice.cache.get(newState.channelId);
                 if (timeoutCache) clearTimeout(timeoutCache);
             }
             if (parentTempVoice && parentTempVoice.isVoice()) {
@@ -22,10 +22,10 @@ export class readyEvent extends Listener {
                     const TemporaryChannelDatabase = await this.container.client.databases.tempVoice.getUserVoice(newState.guild.id, newState.member?.id!);
                     if (TemporaryChannelDatabase) {
                         if (!this.container.client.channels.cache.has(TemporaryChannelDatabase.channelId)) {
-                            await newState.member?.voice.setChannel(guildDatabases.tempVoiceChannel)
-                            return this.container.client.databases.tempVoice.delete(TemporaryChannelDatabase.guild, TemporaryChannelDatabase.channelId)
+                            await newState.member?.voice.setChannel(guildDatabases.tempVoiceChannel);
+                            return this.container.client.databases.tempVoice.delete(TemporaryChannelDatabase.guild, TemporaryChannelDatabase.channelId);
                         }
-                        const timeoutCache = this.container.client.databases.tempVoice.cache.get(TemporaryChannelDatabase.channelId)
+                        const timeoutCache = this.container.client.databases.tempVoice.cache.get(TemporaryChannelDatabase.channelId);
                         if (timeoutCache) clearTimeout(timeoutCache);
                         return newState.member?.voice.setChannel(TemporaryChannelDatabase.channelId).catch(() => null);
                     }
