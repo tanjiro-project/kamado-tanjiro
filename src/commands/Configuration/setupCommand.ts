@@ -113,4 +113,27 @@ export class clientCommand extends SubCommandPluginCommand {
                 .setColor(botEmbedColor)]
         });
     }
+
+    public async autorole(message: Message, args: Args) {
+        const roleArgs = await args.pickResult("role");
+        if (!roleArgs.success) {
+            return message.reply({
+                embeds: [new MessageEmbed().setDescription(`❌ | ${roleArgs.error.message}`).setColor(botEmbedColor)]
+            });
+        }
+        const status = await args.pickResult("string");
+        if (!status.success || !["enable", "disable"].includes(status.value)) {
+            return message.reply({
+                embeds: [new MessageEmbed().setDescription(`❌ | Status must be enable/disable`).setColor(botEmbedColor)]
+            });
+        }
+        await this.container.client.databases.guilds.set(message.guildId!, "autoRoleId", roleArgs.value.id);
+        await this.container.client.databases.guilds.set(message.guildId!, "enableAutoRole", status.value === "enable");
+
+        return message.reply({
+            embeds: [new MessageEmbed()
+                .setDescription(`✔ | Autorole ${status.value === "enable" ? "enabled" : "disabled"} for role ${roleArgs.value.toString()}`)
+                .setColor(botEmbedColor)]
+        });
+    }
 }

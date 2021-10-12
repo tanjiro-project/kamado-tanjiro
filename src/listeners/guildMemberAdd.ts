@@ -25,6 +25,7 @@ export class guildMemberAddEvent extends Listener {
                 }
             }
         }
+        if(guildDatabases.enableAutoRole) await member.roles.add(guildDatabases.autoRoleId, "Auto role").catch(() => undefined);
         if (guildDatabases.enableWelcomeLog) {
             const welcomeLogChannel = this.container.client.channels.resolve(guildDatabases.welcomeLogChannel);
             if (welcomeLogChannel && welcomeLogChannel.isText()) {

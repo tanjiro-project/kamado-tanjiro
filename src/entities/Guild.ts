@@ -42,4 +42,10 @@ export class Guild {
 
     @Column("string")
     public muteRoleId!: Snowflake;
+
+    @Column("string")
+    public autoRoleId!: Snowflake;
+
+    @Column("boolean")
+    public enableAutoRole!: boolean;
 }
