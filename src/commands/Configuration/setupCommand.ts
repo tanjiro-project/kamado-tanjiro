@@ -6,7 +6,7 @@ import { botEmbedColor } from "../../config";
 
 @ApplyOptions<SubCommandPluginCommand.Options>({
     name: "setup",
-    subCommands: ["modlog", "auditlog", "welcomelog", "tempvoice", { input: "show", default: true }],
+    subCommands: ["modlog", "auditlog", "welcomelog", "tempvoice", "autorole", { input: "show", default: true }],
     requiredUserPermissions: ["MANAGE_GUILD"]
 })
 export class clientCommand extends SubCommandPluginCommand {
@@ -17,6 +17,7 @@ export class clientCommand extends SubCommandPluginCommand {
             - ${args.commandContext.commandPrefix}setup auditlog {channel} [status]
             - ${args.commandContext.commandPrefix}setup welcomelog {channel} [status]
             - ${args.commandContext.commandPrefix}setup tempvoice {voice channel} [status]
+            - ${args.commandContext.commandPrefix}setup autorole {role} [status]
             `)
                 .setColor(botEmbedColor)]
         });
