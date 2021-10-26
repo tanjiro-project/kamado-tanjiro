@@ -3,6 +3,7 @@ import { Intents } from "discord.js";
 import { join } from "path";
 import { Connection } from "typeorm";
 import { GuildDatabaseManager } from "../databases/GuildDatabaseManager";
+import { GuildRoleDatabaseManager } from "../databases/GuildRoleDatabaseManager";
 import { MutedUserDatabaseManager } from "../databases/MutedUserDatabaseManager";
 import { TempVoiceDatabaseManager } from "../databases/TemporaryChannelDatabaseManager";
 import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
@@ -18,7 +19,8 @@ export class TanjiroClient extends SapphireClient {
             caseInsensitiveCommands: true,
             caseInsensitivePrefixes: true,
             fetchPrefix: async msg => (await this.databases.guilds.get(msg.guildId!)).prefix,
-            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES],
+            partials: ["GUILD_MEMBER", "REACTION", "MESSAGE"],
+            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
             typing: true,
             ...clientOptions
         });
@@ -29,7 +31,8 @@ export class TanjiroClient extends SapphireClient {
         guilds: new GuildDatabaseManager(),
         warn: new WarnDatabaseManager(),
         tempVoice: new TempVoiceDatabaseManager(),
-        mutedUser: new MutedUserDatabaseManager()
+        mutedUser: new MutedUserDatabaseManager(),
+        guildRole: new GuildRoleDatabaseManager()
     };
 }
 
@@ -39,7 +42,8 @@ declare module "@sapphire/framework" {
             guilds: GuildDatabaseManager,
             warn: WarnDatabaseManager,
             tempVoice: TempVoiceDatabaseManager,
-            mutedUser: MutedUserDatabaseManager
+            mutedUser: MutedUserDatabaseManager,
+            guildRole: GuildRoleDatabaseManager
         }
         connection: Connection;
     }
