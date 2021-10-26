@@ -30,7 +30,7 @@ export class TanjiroClient extends SapphireClient {
         warn: new WarnDatabaseManager(),
         tempVoice: new TempVoiceDatabaseManager(),
         mutedUser: new MutedUserDatabaseManager()
-    }
+    };
 }
 
 declare module "@sapphire/framework" {
