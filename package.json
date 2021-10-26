@@ -4,15 +4,15 @@
   "description": "A discord moderation bot.",
   "dependencies": {
     "@discordjs/builders": "0.7.0",
-    "@sapphire/decorators": "^3.0.0",
-    "@sapphire/framework": "^2.1.3",
-    "@sapphire/plugin-subcommands": "^2.0.1",
-    "@sapphire/utilities": "^3.0.1",
-    "chalk": "^4.1.2",
-    "discord.js": "^13.1.0",
-    "dotenv": "^10.0.0",
-    "mongodb": "^3.7.1",
-    "typeorm": "^0.2.37"
+    "@sapphire/decorators": "3.1.2",
+    "@sapphire/framework": "2.1.3",
+    "@sapphire/plugin-subcommands": "2.0.1",
+    "@sapphire/utilities": "3.0.4",
+    "chalk": "4.1.2",
+    "discord.js": "13.2.0",
+    "dotenv": "10.0.0",
+    "mongodb": "3.7.3",
+    "typeorm": "0.2.38"
   },
   "scripts": {
     "start": "ts-node -r dotenv/config src",
@@ -26,14 +26,14 @@
     "node": ">=v16.x"
   },
   "devDependencies": {
-    "@hazmi35/eslint-config": "^6.0.2",
-    "@types/node": "^16.7.1",
-    "@typescript-eslint/eslint-plugin": "^4.29.3",
-    "@typescript-eslint/parser": "^4.29.3",
-    "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.22.1",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.3.5"
+    "@hazmi35/eslint-config": "6.0.2",
+    "@types/node": "16.11.6",
+    "@typescript-eslint/eslint-plugin": "4.33.0",
+    "@typescript-eslint/parser": "4.33.0",
+    "eslint": "7.32.0",
+    "eslint-plugin-import": "2.25.2",
+    "rimraf": "3.0.2",
+    "ts-node": "10.4.0",
+    "typescript": "4.4.4"
   }
 }
