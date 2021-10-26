@@ -9,7 +9,7 @@ import { Message } from "discord.js";
 })
 
 export class ClientCommand extends Command {
-    async run(message: Message) {
+    async messageRun(message: Message) {
         const msg = await message.channel.send("Pong");
         await msg.edit(`:ping_pong: | ${msg.createdTimestamp - message.createdTimestamp} ms, ${this.container.client.ws.ping} ms`);
     }

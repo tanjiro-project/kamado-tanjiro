@@ -13,7 +13,7 @@ import { codeBlock } from "@discordjs/builders";
 })
 
 export class ClientCommand extends Command {
-    async run(message: Message, args: Args) {
+    async messageRun(message: Message, args: Args) {
         const msg = message; /* eslint-disable-line */
         const userArgument = await args.restResult("string");
         if (!userArgument.success) return message.reply({ embeds: [new MessageEmbed().setDescription("❌ | You need to input code")] });
