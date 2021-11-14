@@ -1,39 +1,42 @@
 import { ApplyOptions } from "@sapphire/decorators";
 import { Args } from "@sapphire/framework";
 import { SubCommandPluginCommand } from "@sapphire/plugin-subcommands";
+import { stripIndents } from "common-tags";
 import { Message, MessageEmbed } from "discord.js";
 import { botEmbedColor } from "../../config";
 
 @ApplyOptions<SubCommandPluginCommand.Options>({
-    name: "setup",
+    name: "settings",
     subCommands: ["modlog", "auditlog", "welcomelog", "tempvoice", "autorole", { input: "show", default: true }],
     requiredUserPermissions: ["MANAGE_GUILD"]
 })
 export class clientCommand extends SubCommandPluginCommand {
     public async show(message: Message, args: Args) {
         message.reply({
-            embeds: [new MessageEmbed().setDescription(`
-            - ${args.commandContext.commandPrefix}setup modlog {channel} [status]
-            - ${args.commandContext.commandPrefix}setup auditlog {channel} [status]
-            - ${args.commandContext.commandPrefix}setup welcomelog {channel} [status]
-            - ${args.commandContext.commandPrefix}setup tempvoice {voice channel} [status]
-            - ${args.commandContext.commandPrefix}setup autorole {role} [status]
-            `)
+            embeds: [new MessageEmbed()
+                .setAuthor(`${this.container.client.user!.username} Settings`, this.container.client.user!.displayAvatarURL())
+                .setDescription(`Type \`${args.commandContext.prefix}settings <option>\` to view more about an option. Available options :`)
+                .addField("🛡 Moderation log", `${args.commandContext.commandPrefix}settings modlog`, true)
+                .addField("🔐 Audit log", `${args.commandContext.commandPrefix}settings auditlog`, true)
+                .addField("👥 Welcome log", `${args.commandContext.commandPrefix}settings welcomelog`, true)
+                .addField("🔉 Temporary voice", `${args.commandContext.commandPrefix}settings tempvoice`, true)
+                .addField("🧻 Autorole", `${args.commandContext.commandPrefix}settings autorole`, true)
                 .setColor(botEmbedColor)]
         });
     }
 
     public async modlog(message: Message, args: Args) {
         const channelArgs = await args.pickResult("guildChannel");
-        if (!channelArgs.success) {
-            return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | ${channelArgs.error.message}`).setColor(botEmbedColor)]
-            });
-        }
         const status = await args.pickResult("string");
-        if (!status.success || !["enable", "disable"].includes(status.value)) {
+        if (!channelArgs.success || (!status.success || !["enable", "disable"].includes(status.value))) {
             return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | Status must be enable/disable`).setColor(botEmbedColor)]
+                embeds: [
+                    this.createEmbed(
+                        message, "🛡 Moderation log", stripIndents`
+                            Example: ${args.commandContext.prefix as string}settings modlog ${message.channel.toString()} enable
+                        `
+                    )
+                ]
             });
         }
         await this.container.client.databases.guilds.set(message.guildId!, "modlogChannel", channelArgs.value.id);
@@ -48,15 +51,16 @@ export class clientCommand extends SubCommandPluginCommand {
 
     public async auditlog(message: Message, args: Args) {
         const channelArgs = await args.pickResult("guildChannel");
-        if (!channelArgs.success) {
-            return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | ${channelArgs.error.message}`).setColor(botEmbedColor)]
-            });
-        }
         const status = await args.pickResult("string");
-        if (!status.success || !["enable", "disable"].includes(status.value)) {
+        if (!channelArgs.success || (!status.success || !["enable", "disable"].includes(status.value))) {
             return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | Status must be enable/disable`).setColor(botEmbedColor)]
+                embeds: [
+                    this.createEmbed(
+                        message, "🔐 Audit log", stripIndents`
+                            Example: ${args.commandContext.prefix as string}settings auditlog ${message.channel.toString()} enable
+                        `
+                    )
+                ]
             });
         }
         await this.container.client.databases.guilds.set(message.guildId!, "auditLogChannel", channelArgs.value.id);
@@ -71,17 +75,19 @@ export class clientCommand extends SubCommandPluginCommand {
 
     public async welcomelog(message: Message, args: Args) {
         const channelArgs = await args.pickResult("guildChannel");
-        if (!channelArgs.success) {
-            return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | ${channelArgs.error.message}`).setColor(botEmbedColor)]
-            });
-        }
         const status = await args.pickResult("string");
-        if (!status.success || !["enable", "disable"].includes(status.value)) {
+        if (!channelArgs.success || (!status.success || !["enable", "disable"].includes(status.value))) {
             return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | Status must be enable/disable`).setColor(botEmbedColor)]
+                embeds: [
+                    this.createEmbed(
+                        message, "👥 Welcome log", stripIndents`
+                            Example: ${args.commandContext.prefix as string}settings welcomelog ${message.channel.toString()} enable
+                        `
+                    )
+                ]
             });
         }
+
         await this.container.client.databases.guilds.set(message.guildId!, "welcomeLogChannel", channelArgs.value.id);
         await this.container.client.databases.guilds.set(message.guildId!, "enableWelcomeLog", status.value === "enable");
 
@@ -94,15 +100,16 @@ export class clientCommand extends SubCommandPluginCommand {
 
     public async tempvoice(message: Message, args: Args) {
         const channelArgs = await args.pickResult("guildVoiceChannel");
-        if (!channelArgs.success) {
-            return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | ${channelArgs.error.message}`).setColor(botEmbedColor)]
-            });
-        }
         const status = await args.pickResult("string");
-        if (!status.success || !["enable", "disable"].includes(status.value)) {
+        if (!channelArgs.success || (!status.success || !["enable", "disable"].includes(status.value))) {
             return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | Status must be enable/disable`).setColor(botEmbedColor)]
+                embeds: [
+                    this.createEmbed(
+                        message, "🔉 Temporary voice", stripIndents`
+                            Example: ${args.commandContext.prefix as string}settings tempvoice ${message.guild?.channels.cache.filter(x => x.type === "GUILD_VOICE").first()?.toString() ?? "#VoiceChannel"} enable
+                        `
+                    )
+                ]
             });
         }
         await this.container.client.databases.guilds.set(message.guildId!, "tempVoiceChannel", channelArgs.value.id);
@@ -117,15 +124,16 @@ export class clientCommand extends SubCommandPluginCommand {
 
     public async autorole(message: Message, args: Args) {
         const roleArgs = await args.pickResult("role");
-        if (!roleArgs.success) {
-            return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | ${roleArgs.error.message}`).setColor(botEmbedColor)]
-            });
-        }
         const status = await args.pickResult("string");
-        if (!status.success || !["enable", "disable"].includes(status.value)) {
+        if (!roleArgs.success || (!status.success || !["enable", "disable"].includes(status.value))) {
             return message.reply({
-                embeds: [new MessageEmbed().setDescription(`❌ | Status must be enable/disable`).setColor(botEmbedColor)]
+                embeds: [
+                    this.createEmbed(
+                        message, "🧻 Autorole", stripIndents`
+                            Example: ${args.commandContext.prefix as string}settings autorole ${message.guild?.roles.cache.filter(x => x.id !== message.guildId).first()?.toString() ?? "@Role"} enable
+                        `
+                    )
+                ]
             });
         }
         await this.container.client.databases.guilds.set(message.guildId!, "autoRoleId", roleArgs.value.id);
@@ -136,5 +144,13 @@ export class clientCommand extends SubCommandPluginCommand {
                 .setDescription(`✔ | Autorole ${status.value === "enable" ? "enabled" : "disabled"} for role ${roleArgs.value.toString()}`)
                 .setColor(botEmbedColor)]
         });
+    }
+
+    private createEmbed(message: Message, name: string, usage: string): MessageEmbed {
+        return new MessageEmbed()
+            .setAuthor(`${message.guild!.name} Setting - ${name}`, this.container.client.user!.displayAvatarURL())
+            .setDescription("**INFO** : Hooks such as [] or <> are not to be used when using commands")
+            .addField("ℹ Usage", usage)
+            .setColor(botEmbedColor);
     }
 }
