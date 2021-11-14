@@ -6,7 +6,7 @@
     "@discordjs/builders": "0.8.2",
     "@sapphire/decorators": "3.1.4",
     "@sapphire/framework": "2.1.4",
-    "@sapphire/plugin-subcommands": "2.0.1",
+    "@sapphire/plugin-subcommands": "2.0.2",
     "@sapphire/utilities": "3.0.7",
     "chalk": "4.1.2",
     "common-tags": "1.8.0",
