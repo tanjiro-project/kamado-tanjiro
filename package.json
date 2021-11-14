@@ -9,7 +9,7 @@
     "@sapphire/plugin-subcommands": "2.0.1",
     "@sapphire/utilities": "3.0.7",
     "chalk": "4.1.2",
-    "common-tags": "1.8.0",
+    "common-tags": "1.8.1",
     "discord.js": "13.3.1",
     "dotenv": "10.0.0",
     "mongodb": "3.7.3",
