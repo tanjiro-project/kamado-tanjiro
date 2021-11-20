@@ -11,34 +11,31 @@ import { botEmbedColor } from "../../config";
 
 export class ClientCommand extends Command {
     async messageRun(message: Message, args: Args) {
+        const messageToDeleteArgs = await args.pickResult("number");
         const lookupUserArgs = await args.pickResult("member");
-        /* eslint no-negated-condition: "off" */
-        if (!lookupUserArgs.success) {
+        if(lookupUserArgs.success && lookupUserArgs.value) {
             const messageToDeleteArgs = await args.pickResult("number");
-            if (message.channel.isText() && message.inGuild()) {
-                const deletedMessage = await message.channel.bulkDelete(messageToDeleteArgs.value ?? 10, true);
-                await message.channel.send({
-                    embeds: [
-                        new MessageEmbed()
-                            .setDescription(`✅ | Pruned ${deletedMessage.size} messages`)
-                            .setColor(botEmbedColor)
-                    ]
-                });
-            }
-        } else {
-            const messageToDeleteArgs = await args.pickResult("number");
-            const filteredMessage = this.transformToCollection([...message.channel.messages.cache.filter(x => x.author.id === lookupUserArgs.value.user.id).values()].splice(0, messageToDeleteArgs.value ?? 10));
+            const filteredMessage = this.transformToCollection([...message.channel.messages.cache.filter(x => (x !== null) && x.author?.id === lookupUserArgs.value.user.id).values()].splice(0, messageToDeleteArgs.value ?? 10));
             if (message.channel.isText() && message.inGuild()) {
                 const deletedMessage = await message.channel.bulkDelete(filteredMessage, true);
-                await message.channel.send({
+                return message.channel.send({
                     embeds: [
                         new MessageEmbed()
                             .setDescription(`✅ | Pruned ${deletedMessage.size} ${lookupUserArgs.value.displayName} messages`)
                             .setColor(botEmbedColor)
                     ]
                 });
-                filteredMessage.clear();
             }
+        }
+        if (message.channel.isText() && message.inGuild()) {
+            const deletedMessage = await message.channel.bulkDelete(messageToDeleteArgs.value ?? 10, true);
+            await message.channel.send({
+                embeds: [
+                    new MessageEmbed()
+                    .setDescription(`✅ | Pruned ${deletedMessage.size} messages`)
+                    .setColor(botEmbedColor)
+                ]
+            });
         }
     }
 
