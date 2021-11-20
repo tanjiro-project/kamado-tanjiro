@@ -1,6 +1,6 @@
 import { Listener, ListenerOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
-import { GuildMember, MessageEmbed } from "discord.js";
+import { GuildMember, MessageEmbed, SystemChannelFlags } from "discord.js";
 import { botEmbedColor } from "../config";
 @ApplyOptions<ListenerOptions>({
     name: "guildMemberAdd"
@@ -26,7 +26,7 @@ export class guildMemberAddEvent extends Listener {
             }
         }
         if (guildDatabases.enableAutoRole) await member.roles.add(guildDatabases.autoRoleId, "Auto role").catch(() => undefined);
-        if (guildDatabases.enableWelcomeLog) {
+        if (guildDatabases.enableWelcomeLog && member.guild.systemChannelFlags.has(SystemChannelFlags.FLAGS.SUPPRESS_JOIN_NOTIFICATIONS)) {
             const welcomeLogChannel = this.container.client.channels.resolve(guildDatabases.welcomeLogChannel);
             if (welcomeLogChannel && welcomeLogChannel.isText()) {
                 await welcomeLogChannel.send({
