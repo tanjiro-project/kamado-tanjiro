@@ -24,11 +24,11 @@ export class ClientCommand extends Command {
         try {
             let { evaled } = await this.parseEval(eval(code)) /* eslint-disable-line */
             if (typeof evaled !== "string") evaled = util.inspect(evaled, { depth: 0 });
-            msg.channel.send({
+            await msg.channel.send({
                 content: codeBlock("js", evaled)
             });
         } catch (e: any) {
-            msg.channel.send({
+            await msg.channel.send({
                 content: codeBlock("js", e.message)
             });
         }

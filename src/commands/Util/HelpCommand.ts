@@ -31,11 +31,11 @@ export class clientCommand extends Command {
         for (const category of categories) {
             const commands = this.container.stores.get("commands").filter(x => x.category === category);
             embed.fields.push({
-                name: `${(category as string)}`,
+                name: `${(category)}`,
                 value: commands.map(x => `\`${x.name}\``).join(", "),
                 inline: false
             });
         }
-        message.channel.send({ embeds: [embed] });
+        return message.channel.send({ embeds: [embed] });
     }
 }

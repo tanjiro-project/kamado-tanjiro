@@ -17,7 +17,6 @@ export class MutedUserDatabaseManager {
 
     public async set(guild: Snowflake, targetId: Snowflake, key: keyof MutedUser, value: any): Promise<MutedUser> {
         const data = (await this.repository.findOne({ guild, targetId })) ?? this.repository.create({ guild, targetId });
-        // @ts-ignore
         data[key] = value;
         await this.repository.save(data);
         return data;

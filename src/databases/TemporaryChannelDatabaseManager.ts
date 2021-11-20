@@ -22,7 +22,6 @@ export class TempVoiceDatabaseManager {
 
     public async set(guild: Snowflake, channelId: Snowflake, ownerId: Snowflake, key: keyof TempVoice, value: any): Promise<TempVoice> {
         const data = (await this.repository.findOne({ guild, channelId, ownerId })) ?? this.repository.create({ guild, ownerId, channelId });
-        // @ts-ignore
         data[key] = value;
         await this.repository.save(data);
         return data;

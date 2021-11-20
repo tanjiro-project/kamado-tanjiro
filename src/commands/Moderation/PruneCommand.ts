@@ -17,7 +17,7 @@ export class ClientCommand extends Command {
             const messageToDeleteArgs = await args.pickResult("number");
             if (message.channel.isText() && message.inGuild()) {
                 const deletedMessage = await message.channel.bulkDelete(messageToDeleteArgs.value ?? 10, true);
-                message.channel.send({
+                await message.channel.send({
                     embeds: [
                         new MessageEmbed()
                             .setDescription(`✅ | Pruned ${deletedMessage.size} messages`)
@@ -30,19 +30,20 @@ export class ClientCommand extends Command {
             const filteredMessage = this.transformToCollection([...message.channel.messages.cache.filter(x => x.author.id === lookupUserArgs.value.user.id).values()].splice(0, messageToDeleteArgs.value ?? 10));
             if (message.channel.isText() && message.inGuild()) {
                 const deletedMessage = await message.channel.bulkDelete(filteredMessage, true);
-                message.channel.send({
+                await message.channel.send({
                     embeds: [
                         new MessageEmbed()
                             .setDescription(`✅ | Pruned ${deletedMessage.size} ${lookupUserArgs.value.displayName} messages`)
                             .setColor(botEmbedColor)
                     ]
                 });
+                filteredMessage.clear();
             }
         }
     }
 
-    public transformToCollection(array: Message<boolean>[]) {
-        const temporaryCollection: Collection<string, Message<boolean>> = new Collection();
+    public transformToCollection(array: Message[]) {
+        const temporaryCollection: Collection<string, Message> = new Collection();
         for (const data of array) {
             temporaryCollection.set(data.id, data);
             continue;

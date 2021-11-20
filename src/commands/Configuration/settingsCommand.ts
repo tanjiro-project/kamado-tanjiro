@@ -12,7 +12,7 @@ import { botEmbedColor } from "../../config";
 })
 export class clientCommand extends SubCommandPluginCommand {
     public async show(message: Message, args: Args) {
-        message.reply({
+        await message.reply({
             embeds: [new MessageEmbed()
                 .setAuthor(`${this.container.client.user!.username} Settings`, this.container.client.user!.displayAvatarURL())
                 .setDescription(`Type \`${args.commandContext.prefix}settings <option>\` to view more about an option. Available options :`)

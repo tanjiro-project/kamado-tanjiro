@@ -86,7 +86,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 ]
             });
         }
-        const getUserCase = await this.container.client.databases.warn.get(message.guildId!, cases!);
+        const getUserCase = await this.container.client.databases.warn.get(message.guildId!, cases);
         if (!getUserCase) {
             return message.reply({
                 embeds: [
@@ -98,7 +98,7 @@ export class clientCommand extends SubCommandPluginCommand {
         }
         const guildDatabases = await this.container.client.databases.guilds.get(message.guildId!);
 
-        const updateCase = await this.container.client.databases.warn.updateReasonCase(message.guildId!, cases!, reason!);
+        const updateCase = await this.container.client.databases.warn.updateReasonCase(message.guildId!, cases, reason);
         const modLog = message.guild?.channels.cache.get(updateCase?.modlogChannel!);
         const user = await this.container.client.users.fetch(updateCase?.targetId!)!;
         const awaitedMessage = await message.channel.send({
@@ -111,7 +111,7 @@ export class clientCommand extends SubCommandPluginCommand {
         if (modLog && modLog?.isText()) {
             const caseEmbed = await modLog.messages.fetch(updateCase?.messageId!);
             await message.delete();
-            caseEmbed.edit({
+            await caseEmbed.edit({
                 embeds: [
                     new MessageEmbed()
                         .addField("**User**", `${user.id} | ${user.tag}`)
@@ -119,13 +119,13 @@ export class clientCommand extends SubCommandPluginCommand {
                         .addField("**Timestamp**", `<t:${Date.now() / 1000 | 0}>`)
                         .setThumbnail(user.displayAvatarURL())
                         .setAuthor("WARNED", message.author.displayAvatarURL())
-                        .addField("**Cases**", cases!)
-                        .addField("**Reason**", reason!)
+                        .addField("**Cases**", cases)
+                        .addField("**Reason**", reason)
                         .setColor(botEmbedColor)
                 ]
             });
         }
-        awaitedMessage.edit({
+        await awaitedMessage.edit({
             embeds: [
                 new MessageEmbed()
                     .setDescription(`⚠ | Updated reason for ${user.tag} case${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[${reason}]\``}`)
@@ -161,7 +161,7 @@ export class clientCommand extends SubCommandPluginCommand {
             const warnEmbed = await modLogChannel.messages.fetch(getUserCase.messageId).catch(() => null);
             await warnEmbed?.delete().catch(() => null);
         }
-        await this.container.client.databases.warn.deleteCase(message.guildId!, cases.value!);
+        await this.container.client.databases.warn.deleteCase(message.guildId!, cases.value);
 
         return message.reply({
             embeds: [

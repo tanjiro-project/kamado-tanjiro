@@ -39,12 +39,12 @@ export class TanjiroClient extends SapphireClient {
 declare module "@sapphire/framework" {
     export interface SapphireClient {
         databases: {
-            guilds: GuildDatabaseManager,
-            warn: WarnDatabaseManager,
-            tempVoice: TempVoiceDatabaseManager,
-            mutedUser: MutedUserDatabaseManager,
-            guildRole: GuildRoleDatabaseManager
-        }
+            guilds: GuildDatabaseManager;
+            warn: WarnDatabaseManager;
+            tempVoice: TempVoiceDatabaseManager;
+            mutedUser: MutedUserDatabaseManager;
+            guildRole: GuildRoleDatabaseManager;
+        };
         connection: Connection;
     }
 }

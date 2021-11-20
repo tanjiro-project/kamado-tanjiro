@@ -17,8 +17,8 @@ export class readyEvent extends Listener {
             type: botActivityType
         });
         const developerId = await this.container.client.application?.fetch();
-        if (developerId?.owner instanceof Team) {
-            for (const [ownerId] of developerId?.owner.members) {
+        if (developerId && developerId.owner instanceof Team) {
+            for (const [ownerId] of developerId.owner.members) {
                 if (!botOwners.includes(ownerId)) botOwners.push(ownerId);
                 continue;
             }
