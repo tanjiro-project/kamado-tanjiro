@@ -154,7 +154,6 @@ export class NonPrefixedMessage extends Listener {
         }
         const getScamURL = await fetch("https://krypton.sergioesquina.repl.co/discordscam.json").json();
         const isScam = getScamURL?.scamlinks.includes(this.extractLinkFromContent(message.content)?.hostname);
-        console.log(isScam, getScamURL.scamlinks, this.extractLinkFromContent(message.content)?.hostname);
         if (isScam) {
             message.delete().catch(() => null);
             if (guildDatabases.enableAutoMod && guildDatabases.enableAuditLog && !message.guild?.roles.cache.has(guildDatabases.muteRoleId)) {
