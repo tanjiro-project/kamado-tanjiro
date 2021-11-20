@@ -48,4 +48,7 @@ export class Guild {
 
     @Column("boolean")
     public enableAutoRole!: boolean;
+
+    @Column("boolean")
+    public enableAutoBan!: boolean;
 }
