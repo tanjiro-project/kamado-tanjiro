@@ -51,4 +51,7 @@ export class Guild {
 
     @Column("boolean")
     public enableAutoBan!: boolean;
+
+    @Column("boolean")
+    public enableAutoMod!: boolean;
 }

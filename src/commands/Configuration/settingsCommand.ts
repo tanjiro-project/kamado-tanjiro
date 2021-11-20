@@ -7,7 +7,7 @@ import { botEmbedColor } from "../../config";
 
 @ApplyOptions<SubCommandPluginCommand.Options>({
     name: "settings",
-    subCommands: ["modlog", "auditlog", "welcomelog", "tempvoice", "autorole", "autoban", { input: "show", default: true }],
+    subCommands: ["modlog", "auditlog", "welcomelog", "tempvoice", "autorole", "autoban", "automod", { input: "show", default: true }],
     requiredUserPermissions: ["MANAGE_GUILD"]
 })
 export class clientCommand extends SubCommandPluginCommand {
@@ -22,6 +22,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 .addField("🔉 Temporary voice", `${args.commandContext.commandPrefix}settings tempvoice`, true)
                 .addField("🧻 Autorole", `${args.commandContext.commandPrefix}settings autorole`, true)
                 .addField("🔨 Auto Ban", `${args.commandContext.commandPrefix}settings autoban`, true)
+                .addField("🔑 Auto Mod", `${args.commandContext.commandPrefix}settings automod`, true)
                 .setColor(botEmbedColor)]
         });
     }
@@ -92,6 +93,28 @@ export class clientCommand extends SubCommandPluginCommand {
         return message.reply({
             embeds: [new MessageEmbed()
                 .setDescription(`✔ | Auto ban ${status.value === "enable" ? "enabled" : "disabled"}`)
+                .setColor(botEmbedColor)]
+        });
+    }
+
+    public async automod(message: Message, args: Args) {
+        const status = await args.pickResult("string");
+        if (!status.success || !["enable", "disable"].includes(status.value)) {
+            return message.reply({
+                embeds: [
+                    this.createEmbed(
+                        message, "🔨 Auto Ban", stripIndents`
+                            Example: ${args.commandContext.prefix as string}settings autmod enable
+                        `
+                    )
+                ]
+            });
+        }
+        await this.container.client.databases.guilds.set(message.guildId!, "enableAutoMod", status.value === "enable");
+
+        return message.reply({
+            embeds: [new MessageEmbed()
+                .setDescription(`✔ | Auto mod ${status.value === "enable" ? "enabled" : "disabled"}`)
                 .setColor(botEmbedColor)]
         });
     }
