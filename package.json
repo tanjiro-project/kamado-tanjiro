@@ -5,7 +5,7 @@
   "dependencies": {
     "@discordjs/builders": "0.8.2",
     "@sapphire/decorators": "3.1.4",
-    "@sapphire/framework": "2.1.4",
+    "@sapphire/framework": "2.2.0",
     "@sapphire/plugin-subcommands": "2.0.2",
     "@sapphire/utilities": "3.1.0",
     "chalk": "4.1.2",
