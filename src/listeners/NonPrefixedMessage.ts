@@ -30,7 +30,7 @@ export class NonPrefixedMessage extends Listener {
                                     .addField("**Timestamp**", `<t:${Date.now() / 1000 | 0}>`)
                                     .setThumbnail(message.member?.displayAvatarURL()!)
                                     .setAuthor("KICKED", message.member?.user.displayAvatarURL())
-                                    .addField("**Reason**", "Auto mod: spam ping")
+                                    .addField("**Reason**", "Auto mod: mention spam")
                                     .setColor(botEmbedColor)
                             ]
                         });
@@ -38,7 +38,7 @@ export class NonPrefixedMessage extends Listener {
                     return message.channel.send({
                         embeds: [
                             new MessageEmbed()
-                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto ban: mention spam]\``}`)
+                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: mention spam]\``}`)
                                 .setColor(botEmbedColor)
                         ]
                     });
@@ -71,7 +71,7 @@ export class NonPrefixedMessage extends Listener {
                     return message.channel.send({
                         embeds: [
                             new MessageEmbed()
-                                .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto ban: mention spam]\``}`)
+                                .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: mention spam]\``}`)
                                 .setColor(botEmbedColor)
                         ]
                     });
@@ -103,7 +103,7 @@ export class NonPrefixedMessage extends Listener {
                 return message.channel.send({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto ban: message spam]\``}`)
+                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: message spam]\``}`)
                             .setColor(botEmbedColor)
                     ]
                 });
@@ -176,7 +176,7 @@ export class NonPrefixedMessage extends Listener {
                 return message.channel.send({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto ban: possibility of phishing]\``}`)
+                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: possibility of phishing]\``}`)
                             .setColor(botEmbedColor)
                     ]
                 });
@@ -209,7 +209,7 @@ export class NonPrefixedMessage extends Listener {
                 return message.channel.send({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto ban: possibility of phishing]\``}`)
+                            .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: possibility of phishing]\``}`)
                             .setColor(botEmbedColor)
                     ]
                 });
