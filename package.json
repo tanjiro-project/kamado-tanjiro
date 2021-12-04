@@ -33,7 +33,7 @@
     "@types/node": "16.11.9",
     "@typescript-eslint/eslint-plugin": "5.4.0",
     "@typescript-eslint/parser": "5.4.0",
-    "eslint": "8.3.0",
+    "eslint": "8.4.0",
     "eslint-plugin-import": "2.25.3",
     "rimraf": "3.0.2",
     "ts-node": "10.4.0",
