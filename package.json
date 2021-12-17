@@ -19,6 +19,7 @@
   "scripts": {
     "start": "ts-node -r dotenv/config src",
     "compile": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix",
     "tests": "npm run compile && npm run lint",
