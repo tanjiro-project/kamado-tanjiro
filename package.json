@@ -31,7 +31,7 @@
   "devDependencies": {
     "@hazmi35/eslint-config": "7.0.1",
     "@types/common-tags": "1.8.1",
-    "@types/ms": "^0.7.31",
+    "@types/ms": "0.7.31",
     "@types/node": "16.11.17",
     "@typescript-eslint/eslint-plugin": "5.8.0",
     "@typescript-eslint/parser": "5.8.0",
