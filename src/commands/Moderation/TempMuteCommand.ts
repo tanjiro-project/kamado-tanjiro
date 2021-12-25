@@ -41,7 +41,16 @@ export class clientCommand extends SubCommandPluginCommand {
                     .setColor(botEmbedColor)
             ]
         });
-        const mutedUser = await message.guild?.members.resolve(user)?.timeout(this.resolveTimeout(timeout), reason)!;
+        const mutedUser = await message.guild?.members.resolve(user)?.timeout(this.resolveTimeout(timeout), reason);
+        if (!mutedUser) {
+            return awaitedMessage.edit({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`⚠ | Cannot find ${user.username} in this server`)
+                        .setColor(botEmbedColor)
+                ]
+            });
+        }
         if (guildDatabases.enableModLog) {
             const modLogChannel = message.guild?.channels.resolve(guildDatabases.modlogChannel);
             if (modLogChannel?.isText()) {

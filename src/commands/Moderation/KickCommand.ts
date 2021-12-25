@@ -31,7 +31,16 @@ export class ClientCommand extends Command {
                     .setColor(botEmbedColor)
             ]
         });
-        const kickedUser = await message.guild?.members.resolve(user)?.kick(reason)!;
+        const kickedUser = await message.guild?.members.resolve(user)?.kick(reason);
+        if (!kickedUser) {
+            return awaitedMessage.edit({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`⚠ | Unknown user, discontinuted kick`)
+                        .setColor(botEmbedColor)
+                ]
+            });
+        }
         if (guildDatabases.enableModLog) {
             const modLogChannel = message.guild?.channels.resolve(guildDatabases.modlogChannel);
             if (modLogChannel?.isText()) {

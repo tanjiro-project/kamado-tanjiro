@@ -18,7 +18,7 @@ export class clientCommand extends SubCommandPluginCommand {
         const cases = crypto.randomBytes(3).toString("hex");
         const reason = (await args.restResult("string")).value ?? `${args.commandContext.commandPrefix}warn update --case=${cases} {reason}`;
         const guildDatabases = await this.container.client.databases.guilds.get(message.guildId!);
-        if (!user) {
+        if (!user || !message.guild?.members.resolve(user)) {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
@@ -100,7 +100,16 @@ export class clientCommand extends SubCommandPluginCommand {
 
         const updateCase = await this.container.client.databases.warn.updateReasonCase(message.guildId!, cases, reason);
         const modLog = message.guild?.channels.cache.get(updateCase?.modlogChannel!);
-        const user = await this.container.client.users.fetch(updateCase?.targetId!)!;
+        const user = await this.container.client.users.fetch(updateCase?.targetId!);
+        if (!user || !message.guild?.members.resolve(user)) {
+            return message.reply({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`⚠ | Could not fetch user with id ${updateCase?.targetId}, possibility unknown user.`)
+                        .setColor(botEmbedColor)
+                ]
+            });
+        }
         const awaitedMessage = await message.channel.send({
             embeds: [
                 new MessageEmbed()

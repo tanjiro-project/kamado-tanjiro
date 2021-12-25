@@ -34,6 +34,15 @@ export class ClientCommand extends Command {
             ]
         });
         const bannedUser = this.container.client.users.resolve(await message.guild?.members.ban(user, { days, reason }) as User | GuildMember);
+        if (!bannedUser) {
+            return awaitedMessage.edit({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`⚠ | Unknown user, discontinuted ban`)
+                        .setColor(botEmbedColor)
+                ]
+            });
+        }
         if (guildDatabases.enableModLog && bannedUser) {
             const modLogChannel = message.guild?.channels.resolve(guildDatabases.modlogChannel);
             if (modLogChannel?.isText()) {
@@ -55,7 +64,7 @@ export class ClientCommand extends Command {
         return awaitedMessage.edit({
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`⚠ | Banned ${bannedUser?.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[${reason}]\``}`)
+                    .setDescription(`⚠ | Banned ${bannedUser.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[${reason}]\``}`)
                     .setColor(botEmbedColor)
             ]
         });

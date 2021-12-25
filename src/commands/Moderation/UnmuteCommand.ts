@@ -28,7 +28,16 @@ export class clientCommand extends Command {
                     .setColor(botEmbedColor)
             ]
         });
-        const unmutedUser = await message.guild?.members.resolve(user)?.roles.remove(guildDatabases.muteRoleId, reason).catch(() => undefined!)!;
+        const unmutedUser = await message.guild?.members.resolve(user)?.roles.remove(guildDatabases.muteRoleId, reason).catch(() => undefined!);
+        if (!unmutedUser) {
+            return awaitedMessage.edit({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`⚠ | Cannot find ${user.username} in this server`)
+                        .setColor(botEmbedColor)
+                ]
+            });
+        }
         if (guildDatabases.enableModLog) {
             const modLogChannel = message.guild?.channels.resolve(guildDatabases.modlogChannel);
             if (modLogChannel?.isText()) {

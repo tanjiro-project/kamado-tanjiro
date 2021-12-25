@@ -32,6 +32,15 @@ export class ClientCommand extends Command {
             ]
         });
         const bannedUser = this.container.client.users.resolve(await message.guild?.members.unban(user) as User | GuildMember);
+        if (!bannedUser) {
+            return awaitedMessage.edit({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`⚠ | Unknown user, discontinuted unban`)
+                        .setColor(botEmbedColor)
+                ]
+            });
+        }
         if (guildDatabases.enableModLog && bannedUser) {
             const modLogChannel = message.guild?.channels.resolve(guildDatabases.modlogChannel);
             if (modLogChannel?.isText()) {
@@ -53,7 +62,7 @@ export class ClientCommand extends Command {
         return awaitedMessage.edit({
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`⚠ | Unbanned ${bannedUser?.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[${reason}]\``}`)
+                    .setDescription(`⚠ | Unbanned ${bannedUser.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[${reason}]\``}`)
                     .setColor(botEmbedColor)
             ]
         });
