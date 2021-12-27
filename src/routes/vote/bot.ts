@@ -34,7 +34,7 @@ export class voteBotRoute extends Route {
                         .setTitle(`Thank you for voting for ${bot.username}#${bot.discriminator}`)
                         .setColor(15277667)
                         .setDescription(`User: \`${user.username}#${user.discriminator} (${bodyPayload.user})\` just voted on top.gg! 🎉\n${isSuccess ? `Given <@&808197832859189311> role to user as reward 🎉 [12 Hours]\n\nYou can vote on top.gg [here](https://top.gg/bot/${bot.id}/vote) every 12 hours!` : ""}`)
-                        .setFooter({ text: bodyPayload.type === "test" ? "This is a test vote webhook" : "" })
+                        .setFooter(bodyPayload.type === "test" ? { text: "This is a test vote webhook" } : null)
                 ]
             });
 
