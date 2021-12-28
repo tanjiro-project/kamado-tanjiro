@@ -31,6 +31,10 @@ export class TanjiroClient extends SapphireClient {
                             username: redisUsername,
                             password: redisPassword,
                             port: redisPort
+                        },
+                        defaultJobOptions: {
+                            removeOnComplete: true,
+                            removeOnFail: true
                         }
                     }
                 })
