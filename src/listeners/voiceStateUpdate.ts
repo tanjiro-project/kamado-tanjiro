@@ -34,10 +34,10 @@ export class readyEvent extends Listener {
                         type: "GUILD_VOICE",
                         parent: newState.channel?.parentId!
                     });
+                    await this.container.client.databases.tempVoice.set(newState.guild.id, createdTemporaryChannel.id, newState.member?.id!, "parentId", createdTemporaryChannel.parentId);
                     await createdTemporaryChannel.permissionOverwrites.edit(newState.member!, {
                         MANAGE_CHANNELS: true
                     });
-                    await this.container.client.databases.tempVoice.set(newState.guild.id, createdTemporaryChannel.id, newState.member?.id!, "parentId", createdTemporaryChannel.parentId);
                     newState.member?.voice.setChannel(createdTemporaryChannel).catch(() => null);
                 } else if (oldState.channelId === getOldTemporaryChannelDatabase?.channelId && !oldState.channel?.members.size) {
                     const voiceTimeout = setTimeout(async () => {
