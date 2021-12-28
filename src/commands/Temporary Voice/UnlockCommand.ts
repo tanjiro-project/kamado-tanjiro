@@ -1,4 +1,4 @@
-import { CommandOptions, Command, Args } from "@sapphire/framework";
+import { CommandOptions, Command } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Message, MessageEmbed } from "discord.js";
 import { botEmbedColor } from "../../config";
