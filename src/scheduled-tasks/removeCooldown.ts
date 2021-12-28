@@ -6,7 +6,7 @@ import { Snowflake } from "discord.js";
     name: "removeCooldown"
 })
 
-export class removePrizeTask extends ScheduledTask {
+export class removeCooldownTask extends ScheduledTask {
     public async run(payload: removeCooldownPayload) {
         this.container.client.cooldownVote.delete(payload.userId);
     }
