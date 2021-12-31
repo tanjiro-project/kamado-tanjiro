@@ -8,7 +8,7 @@ import { Snowflake } from "discord.js";
 
 export class removeCooldownTask extends ScheduledTask {
     public async run(payload: removeCooldownPayload) {
-        this.container.client.cooldownVote.delete(payload.userId);
+        await this.container.client.databases.votedUser.delete(payload.userId);
     }
 }
 

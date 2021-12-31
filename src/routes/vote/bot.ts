@@ -19,9 +19,10 @@ export class voteBotRoute extends Route {
         const isSuccess = await (await guildServer.members.fetch(user).catch(() => undefined))?.roles.add("808197832859189311").catch(() => undefined);
 
         const textChannel = this.container.client.channels.cache.get("785715969561067558");
-        if (this.container.client.cooldownVote.has(user.id)) return response.json({ status: 200 });
+        const isUserExistOnDatabase = await this.container.client.databases.votedUser.get(user.id);
+        if (isUserExistOnDatabase) return response.json({ status: 200 });
         if (textChannel && textChannel.isText()) {
-            this.container.client.cooldownVote.set(user.id, true);
+            await this.container.client.databases.votedUser.set(user.id);
             this.container.tasks.create("removeCooldown", { userId: user.id }, bodyPayload.type === "test" ? 3000 : 4.32e+7);
 
             if (isSuccess) {

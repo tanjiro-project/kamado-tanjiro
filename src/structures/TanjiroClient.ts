@@ -1,5 +1,5 @@
 import { SapphireClient, SapphireClientOptions } from "@sapphire/framework";
-import { Intents, Snowflake } from "discord.js";
+import { Intents } from "discord.js";
 import { join } from "path";
 import { Connection } from "typeorm";
 import { GuildDatabaseManager } from "../databases/GuildDatabaseManager";
@@ -7,10 +7,11 @@ import { GuildRoleDatabaseManager } from "../databases/GuildRoleDatabaseManager"
 import { MutedUserDatabaseManager } from "../databases/MutedUserDatabaseManager";
 import { TempVoiceDatabaseManager } from "../databases/TemporaryChannelDatabaseManager";
 import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
+import { VotedUserDatabaseManager } from "../databases/VotedUserDatabaseManager";
 import { ScheduledTaskRedisStrategy } from "@sapphire/plugin-scheduled-tasks/register-redis";
 import "@sapphire/plugin-api/register";
 import { apiPort, redisHost, redisPassword, redisPort, redisUsername } from "../config";
-import Enmap from "enmap";
+
 export class TanjiroClient extends SapphireClient {
     public constructor(clientOptions?: SapphireClientOptions) {
         super({
@@ -50,14 +51,14 @@ export class TanjiroClient extends SapphireClient {
         });
     }
 
-    public cooldownVote: Enmap<Snowflake, boolean> = new Enmap({ name: "cooldownUser" });
     public connection!: Connection;
     public databases = {
         guilds: new GuildDatabaseManager(),
         warn: new WarnDatabaseManager(),
         tempVoice: new TempVoiceDatabaseManager(),
         mutedUser: new MutedUserDatabaseManager(),
-        guildRole: new GuildRoleDatabaseManager()
+        guildRole: new GuildRoleDatabaseManager(),
+        votedUser: new VotedUserDatabaseManager()
     };
 }
 
@@ -69,8 +70,8 @@ declare module "@sapphire/framework" {
             tempVoice: TempVoiceDatabaseManager;
             mutedUser: MutedUserDatabaseManager;
             guildRole: GuildRoleDatabaseManager;
+            votedUser: VotedUserDatabaseManager;
         };
-        cooldownVote: Enmap<Snowflake, boolean>;
         connection: Connection;
     }
 }
