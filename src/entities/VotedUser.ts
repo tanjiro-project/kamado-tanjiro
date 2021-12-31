@@ -1,11 +1,11 @@
 import { Snowflake } from "discord.js";
-import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
+import { Entity, ObjectID, ObjectIdColumn, PrimaryColumn } from "typeorm";
 
 @Entity({ name: "votedUser" })
 export class VotedUser {
     @ObjectIdColumn()
     public _id!: ObjectID;
 
-    @Column()
+    @PrimaryColumn()
     public userId!: Snowflake;
 }
