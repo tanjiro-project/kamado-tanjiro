@@ -7,10 +7,6 @@ import { GuildRoleDatabaseManager } from "../databases/GuildRoleDatabaseManager"
 import { MutedUserDatabaseManager } from "../databases/MutedUserDatabaseManager";
 import { TempVoiceDatabaseManager } from "../databases/TemporaryChannelDatabaseManager";
 import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
-import { VotedUserDatabaseManager } from "../databases/VotedUserDatabaseManager";
-import { ScheduledTaskRedisStrategy } from "@sapphire/plugin-scheduled-tasks/register-redis";
-import "@sapphire/plugin-api/register";
-import { apiPort, redisHost, redisPassword, redisPort, redisUsername } from "../config";
 
 export class TanjiroClient extends SapphireClient {
     public constructor(clientOptions?: SapphireClientOptions) {
@@ -18,27 +14,6 @@ export class TanjiroClient extends SapphireClient {
             allowedMentions: {
                 users: [],
                 repliedUser: false
-            },
-            api: {
-                listenOptions: {
-                    port: apiPort
-                }
-            },
-            tasks: {
-                strategy: new ScheduledTaskRedisStrategy({
-                    bull: {
-                        redis: {
-                            host: redisHost,
-                            username: redisUsername,
-                            password: redisPassword,
-                            port: redisPort
-                        },
-                        defaultJobOptions: {
-                            removeOnComplete: true,
-                            removeOnFail: true
-                        }
-                    }
-                })
             },
             baseUserDirectory: join(__dirname, ".."),
             caseInsensitiveCommands: true,
@@ -57,8 +32,7 @@ export class TanjiroClient extends SapphireClient {
         warn: new WarnDatabaseManager(),
         tempVoice: new TempVoiceDatabaseManager(),
         mutedUser: new MutedUserDatabaseManager(),
-        guildRole: new GuildRoleDatabaseManager(),
-        votedUser: new VotedUserDatabaseManager()
+        guildRole: new GuildRoleDatabaseManager()
     };
 }
 
@@ -70,7 +44,6 @@ declare module "@sapphire/framework" {
             tempVoice: TempVoiceDatabaseManager;
             mutedUser: MutedUserDatabaseManager;
             guildRole: GuildRoleDatabaseManager;
-            votedUser: VotedUserDatabaseManager;
         };
         connection: Connection;
     }
