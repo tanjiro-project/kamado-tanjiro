@@ -21,7 +21,7 @@ export class ClientCommand extends Command {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input user id`)
+                        .setDescription("⚠ | Please mention member / input user id")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -33,12 +33,12 @@ export class ClientCommand extends Command {
                     .setColor(botEmbedColor)
             ]
         });
-        const bannedUser = this.container.client.users.resolve(await message.guild?.members.ban(user, { days, reason }) as User | GuildMember);
+        const bannedUser = this.container.client.users.resolve(await message.guild?.members.ban(user, { days, reason }) as GuildMember | User);
         if (!bannedUser) {
             return awaitedMessage.edit({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Unknown user, discontinuted ban`)
+                        .setDescription("⚠ | Unknown user, discontinuted ban")
                         .setColor(botEmbedColor)
                 ]
             });

@@ -19,7 +19,7 @@ export class ClientCommand extends Command {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input user id`)
+                        .setDescription("⚠ | Please mention member / input user id")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -36,7 +36,7 @@ export class ClientCommand extends Command {
             return awaitedMessage.edit({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Unknown user, discontinuted kick`)
+                        .setDescription("⚠ | Unknown user, discontinuted kick")
                         .setColor(botEmbedColor)
                 ]
             });

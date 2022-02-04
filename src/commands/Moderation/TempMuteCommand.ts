@@ -19,7 +19,7 @@ export class clientCommand extends SubCommandPluginCommand {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please input valid timeout duration`)
+                        .setDescription("⚠ | Please input valid timeout duration")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -29,7 +29,7 @@ export class clientCommand extends SubCommandPluginCommand {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input valid user id`)
+                        .setDescription("⚠ | Please mention member / input valid user id")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -90,7 +90,7 @@ export class clientCommand extends SubCommandPluginCommand {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input valid user id`)
+                        .setDescription("⚠ | Please mention member / input valid user id")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -135,7 +135,7 @@ export class clientCommand extends SubCommandPluginCommand {
 
     public resolveTimeout(date: string) {
         if (["1m", "60s"].includes(date)) return 1 * 60 * 1000;
-        if (["10m"].includes(date)) 10 * 60 * 1000;
+        if (["10m"].includes(date)) return 10 * 60 * 1000;
         if (["60m", "1h"].includes(date)) return 60 * 60 * 1000;
         if (["24h", "1d"].includes(date)) return 1440 * 60 * 1000;
         if (["7d", "1w"].includes(date)) return (1440 * 60 * 7) * 1000;

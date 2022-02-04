@@ -38,7 +38,7 @@ export class NonPrefixedMessage extends Listener {
                     return message.channel.send({
                         embeds: [
                             new MessageEmbed()
-                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: mention spam]\``}`)
+                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: mention spam]`"}`)
                                 .setColor(botEmbedColor)
                         ]
                     });
@@ -47,7 +47,7 @@ export class NonPrefixedMessage extends Listener {
                     return message.channel.send({
                         embeds: [
                             new MessageEmbed()
-                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: mention spam]\``}`)
+                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: mention spam]`"}`)
                                 .setColor(botEmbedColor)
                         ]
                     });
@@ -71,7 +71,7 @@ export class NonPrefixedMessage extends Listener {
                     return message.channel.send({
                         embeds: [
                             new MessageEmbed()
-                                .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: mention spam]\``}`)
+                                .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: mention spam]`"}`)
                                 .setColor(botEmbedColor)
                         ]
                     });
@@ -103,7 +103,7 @@ export class NonPrefixedMessage extends Listener {
                 return message.channel.send({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: message spam]\``}`)
+                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: message spam]`"}`)
                             .setColor(botEmbedColor)
                     ]
                 });
@@ -112,7 +112,7 @@ export class NonPrefixedMessage extends Listener {
                 return message.channel.send({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: message spam]\``}`)
+                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: message spam]`"}`)
                             .setColor(botEmbedColor)
                     ]
                 });
@@ -136,7 +136,7 @@ export class NonPrefixedMessage extends Listener {
                 return message.channel.send({
                     embeds: [
                         new MessageEmbed()
-                            .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto ban: message spam]\``}`)
+                            .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto ban: message spam]`"}`)
                             .setColor(botEmbedColor)
                     ]
                 });
@@ -152,68 +152,72 @@ export class NonPrefixedMessage extends Listener {
                 ]
             });
         }
-        const getScamURL = await fetch("https://krypton.sergioesquina.repl.co/discordscam.json").json();
-        const isScam = getScamURL?.scamlinks.includes(this.extractLinkFromContent(message.content)?.hostname);
-        if (isScam) {
-            message.delete().catch(() => null);
-            if (guildDatabases.enableAutoMod && guildDatabases.enableAuditLog && !message.guild?.roles.cache.has(guildDatabases.muteRoleId)) {
-                message.member?.kick().catch(() => null);
-                const modLogChannel = message.guild?.channels.resolve(guildDatabases.modlogChannel);
-                if (modLogChannel?.isText()) {
-                    await modLogChannel.send({
+        try {
+            const getScamURL = await fetch("https://krypton.sergioesquina.repl.co/discordscam.json").json<{ scamlinks: string[] }>();
+            const isScam = getScamURL.scamlinks.includes(this.extractLinkFromContent(message.content)?.hostname!);
+            if (isScam) {
+                message.delete().catch(() => null);
+                if (guildDatabases.enableAutoMod && guildDatabases.enableAuditLog && !message.guild?.roles.cache.has(guildDatabases.muteRoleId)) {
+                    message.member?.kick().catch(() => null);
+                    const modLogChannel = message.guild?.channels.resolve(guildDatabases.modlogChannel);
+                    if (modLogChannel?.isText()) {
+                        await modLogChannel.send({
+                            embeds: [
+                                new MessageEmbed()
+                                    .addField("**User**", `${message.member?.id} | ${message.member?.user.tag}`)
+                                    .addField("**Executor**", `${message.member?.guild.me?.user.id} | ${message.member?.guild.me?.user.tag}`)
+                                    .addField("**Timestamp**", `<t:${Date.now() / 1000 | 0}>`)
+                                    .setThumbnail(message.member?.displayAvatarURL()!)
+                                    .setAuthor("KICKED", message.member?.user.displayAvatarURL())
+                                    .addField("**Reason**", "Auto mod: possibility of phishing")
+                                    .setColor(botEmbedColor)
+                            ]
+                        });
+                    }
+                    return await message.channel.send({
                         embeds: [
                             new MessageEmbed()
-                                .addField("**User**", `${message.member?.id} | ${message.member?.user.tag}`)
-                                .addField("**Executor**", `${message.member?.guild.me?.user.id} | ${message.member?.guild.me?.user.tag}`)
-                                .addField("**Timestamp**", `<t:${Date.now() / 1000 | 0}>`)
-                                .setThumbnail(message.member?.displayAvatarURL()!)
-                                .setAuthor("KICKED", message.member?.user.displayAvatarURL())
-                                .addField("**Reason**", "Auto mod: possibility of phishing")
+                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: possibility of phishing]`"}`)
+                                .setColor(botEmbedColor)
+                        ]
+                    });
+                } else if (guildDatabases.enableAutoMod && !message.guild?.roles.cache.has(guildDatabases.muteRoleId)) {
+                    message.member?.kick("Auto mod: possibility of phishing").catch(() => null);
+                    return await message.channel.send({
+                        embeds: [
+                            new MessageEmbed()
+                                .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: possibility of phishing]`"}`)
+                                .setColor(botEmbedColor)
+                        ]
+                    });
+                } else if (guildDatabases.enableAutoMod && guildDatabases.enableModLog && message.guild?.roles.cache.has(guildDatabases.muteRoleId)) {
+                    message.member?.roles.add(guildDatabases.muteRoleId).catch(() => null);
+                    const modLogChannel = message.guild.channels.resolve(guildDatabases.modlogChannel);
+                    if (modLogChannel?.isText()) {
+                        await modLogChannel.send({
+                            embeds: [
+                                new MessageEmbed()
+                                    .addField("**User**", `${message.member?.id} | ${message.member?.user.tag}`)
+                                    .addField("**Executor**", `${message.member?.guild.me?.user.id} | ${message.member?.guild.me?.user.tag}`)
+                                    .addField("**Timestamp**", `<t:${Date.now() / 1000 | 0}>`)
+                                    .setThumbnail(message.member?.displayAvatarURL()!)
+                                    .setAuthor("MUTED", message.member?.user.displayAvatarURL())
+                                    .addField("**Reason**", "Auto mod: possibility of phishing")
+                                    .setColor(botEmbedColor)
+                            ]
+                        });
+                    }
+                    return await message.channel.send({
+                        embeds: [
+                            new MessageEmbed()
+                                .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto mod: possibility of phishing]`"}`)
                                 .setColor(botEmbedColor)
                         ]
                     });
                 }
-                return message.channel.send({
-                    embeds: [
-                        new MessageEmbed()
-                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: possibility of phishing]\``}`)
-                            .setColor(botEmbedColor)
-                    ]
-                });
-            } else if (guildDatabases.enableAutoMod && !message.guild?.roles.cache.has(guildDatabases.muteRoleId)) {
-                message.member?.kick("Auto mod: possibility of phishing").catch(() => null);
-                return message.channel.send({
-                    embeds: [
-                        new MessageEmbed()
-                            .setDescription(`🔨 | Auto kicked ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: possibility of phishing]\``}`)
-                            .setColor(botEmbedColor)
-                    ]
-                });
-            } else if (guildDatabases.enableAutoMod && guildDatabases.enableModLog && message.guild?.roles.cache.has(guildDatabases.muteRoleId)) {
-                message.member?.roles.add(guildDatabases.muteRoleId).catch(() => null);
-                const modLogChannel = message.guild.channels.resolve(guildDatabases.modlogChannel);
-                if (modLogChannel?.isText()) {
-                    await modLogChannel.send({
-                        embeds: [
-                            new MessageEmbed()
-                                .addField("**User**", `${message.member?.id} | ${message.member?.user.tag}`)
-                                .addField("**Executor**", `${message.member?.guild.me?.user.id} | ${message.member?.guild.me?.user.tag}`)
-                                .addField("**Timestamp**", `<t:${Date.now() / 1000 | 0}>`)
-                                .setThumbnail(message.member?.displayAvatarURL()!)
-                                .setAuthor("MUTED", message.member?.user.displayAvatarURL())
-                                .addField("**Reason**", "Auto mod: possibility of phishing")
-                                .setColor(botEmbedColor)
-                        ]
-                    });
-                }
-                return message.channel.send({
-                    embeds: [
-                        new MessageEmbed()
-                            .setDescription(`🔨 | Auto muted ${message.member?.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto mod: possibility of phishing]\``}`)
-                            .setColor(botEmbedColor)
-                    ]
-                });
             }
+        } catch (_e) {
+            /* Do nothing. */
         }
     }
 
@@ -223,7 +227,7 @@ export class NonPrefixedMessage extends Listener {
     public extractLinkFromContent(args: string) {
         try {
             return new URL(Array.from(args.matchAll(/(?:https?):\/\/[^\n\r ]+(?<=(?: ||))/gim), m => m[0])[0]);
-        } catch (e) {
+        } catch (_e) {
             return null;
         }
     }

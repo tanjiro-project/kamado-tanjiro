@@ -38,7 +38,7 @@ export class clientCommand extends SubCommandPluginCommand {
         return message.channel.send({
             embeds: [
                 new MessageEmbed()
-                    .setDescription(`✅ | Channel name template has been saved.`)
+                    .setDescription("✅ | Channel name template has been saved.")
                     .setColor(botEmbedColor)
             ]
         });

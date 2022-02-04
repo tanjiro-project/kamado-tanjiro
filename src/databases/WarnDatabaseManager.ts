@@ -14,7 +14,7 @@ export class WarnDatabaseManager {
     }
 
     public async set(guild: Snowflake, warnCase: string, executorId: string, targetId: string, messageId: Snowflake, modlogChannel: Snowflake, key: keyof warnCases, value: any): Promise<warnCases> {
-        const data = (await this.repository.findOne({ guild, warnCase, executorId, targetId, messageId, modlogChannel })) ?? this.repository.create({ guild, warnCase, executorId, targetId, messageId, modlogChannel });
+        const data = await this.repository.findOne({ guild, warnCase, executorId, targetId, messageId, modlogChannel }) ?? this.repository.create({ guild, warnCase, executorId, targetId, messageId, modlogChannel });
         data[key] = value;
         await this.repository.save(data);
         return data;

@@ -22,7 +22,7 @@ export class ClientCommand extends Command {
             return message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please input valid message id or reply`)
+                        .setDescription("⚠ | Please input valid message id or reply")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -32,7 +32,7 @@ export class ClientCommand extends Command {
             return message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please input valid emoji id or name`)
+                        .setDescription("⚠ | Please input valid emoji id or name")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -42,7 +42,7 @@ export class ClientCommand extends Command {
             return message.channel.send({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please input valid role id or name`)
+                        .setDescription("⚠ | Please input valid role id or name")
                         .setColor(botEmbedColor)
                 ]
             });

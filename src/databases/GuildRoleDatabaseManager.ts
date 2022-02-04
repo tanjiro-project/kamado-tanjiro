@@ -13,7 +13,7 @@ export class GuildRoleDatabaseManager {
     }
 
     public async set(guild: Snowflake, roleId: Snowflake, channelId: Snowflake, messageId: Snowflake, key: keyof GuildRole, value: any): Promise<GuildRole> {
-        const data = (await this.repository.findOne({ guild, roleId, channelId, messageId })) ?? this.repository.create({ guild, roleId, channelId, messageId });
+        const data = await this.repository.findOne({ guild, roleId, channelId, messageId }) ?? this.repository.create({ guild, roleId, channelId, messageId });
         data[key] = value;
         await this.repository.save(data);
         return data;

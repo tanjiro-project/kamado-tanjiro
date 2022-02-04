@@ -22,7 +22,7 @@ export class clientCommand extends SubCommandPluginCommand {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input valid user id`)
+                        .setDescription("⚠ | Please mention member / input valid user id")
                         .setColor(botEmbedColor)
                 ]
             });
@@ -72,7 +72,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 embeds: [
                     new MessageEmbed()
                         .setColor(botEmbedColor)
-                        .setDescription(`⚠ | Please input reason`)
+                        .setDescription("⚠ | Please input reason")
                 ]
             });
         }
@@ -82,7 +82,7 @@ export class clientCommand extends SubCommandPluginCommand {
                 embeds: [
                     new MessageEmbed()
                         .setColor(botEmbedColor)
-                        .setDescription(`⚠ | Please input case id`)
+                        .setDescription("⚠ | Please input case id")
                 ]
             });
         }

@@ -16,7 +16,7 @@ export class MutedUserDatabaseManager {
     public cache: Collection<Snowflake, NodeJS.Timeout> = new Collection();
 
     public async set(guild: Snowflake, targetId: Snowflake, key: keyof MutedUser, value: any): Promise<MutedUser> {
-        const data = (await this.repository.findOne({ guild, targetId })) ?? this.repository.create({ guild, targetId });
+        const data = await this.repository.findOne({ guild, targetId }) ?? this.repository.create({ guild, targetId });
         data[key] = value;
         await this.repository.save(data);
         return data;

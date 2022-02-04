@@ -31,7 +31,7 @@ export class clientCommand extends Command {
         for (const category of categories) {
             const commands = this.container.stores.get("commands").filter(x => x.category === category);
             embed.fields.push({
-                name: `${(category)}`,
+                name: `${category}`,
                 value: commands.map(x => `\`${x.name}\``).join(", "),
                 inline: false
             });

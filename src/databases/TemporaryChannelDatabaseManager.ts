@@ -21,7 +21,7 @@ export class TempVoiceDatabaseManager {
     public cache: Collection<Snowflake, NodeJS.Timeout> = new Collection();
 
     public async set(guild: Snowflake, channelId: Snowflake, ownerId: Snowflake, key: keyof TempVoice, value: any): Promise<TempVoice> {
-        const data = (await this.repository.findOne({ guild, channelId, ownerId })) ?? this.repository.create({ guild, ownerId, channelId });
+        const data = await this.repository.findOne({ guild, channelId, ownerId }) ?? this.repository.create({ guild, ownerId, channelId });
         data[key] = value;
         await this.repository.save(data);
         return data;

@@ -33,7 +33,7 @@ export class readyEvent extends Listener {
             this.container.logger.error("MONGODB_CONN_ERR:", e);
             this.container.logger.warn("Couldn't connect to database. Exiting...");
             return process.exit(1);
-        }).then(async (c: any) => {
+        }).then((c: any) => {
             this.container.logger.info("Connected to MongoDB cloud");
             for (const database of Object.values(this.container.client.databases)) {
                 database._initRepos();

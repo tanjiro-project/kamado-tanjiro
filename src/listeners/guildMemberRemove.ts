@@ -42,7 +42,7 @@ export class guildMemberRemoveEvent extends Listener {
                         reply: { messageReference: awaitedMessage },
                         embeds: [
                             new MessageEmbed()
-                                .setDescription(`🔨 | Auto banned ${member.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : ` | reason: \`[Auto ban: user leaving]\``}`)
+                                .setDescription(`🔨 | Auto banned ${member.user.tag}${guildDatabases.enableModLog ? `, see <#${guildDatabases.modlogChannel}> for more info` : " | reason: `[Auto ban: user leaving]`"}`)
                                 .setColor(botEmbedColor)
                         ]
                     });

@@ -16,7 +16,7 @@ export class clientCommand extends Command {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input user id`)
+                        .setDescription("⚠ | Please mention member / input user id")
                         .setColor(botEmbedColor)
                 ]
             });

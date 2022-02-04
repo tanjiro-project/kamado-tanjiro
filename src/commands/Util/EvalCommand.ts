@@ -20,7 +20,7 @@ export class ClientCommand extends Command {
         const code = userArgument.value
             .replace(/`/g, `\`${String.fromCharCode(8203)}`)
             .replace(/@/g, `@${String.fromCharCode(8203)}`)
-            .replace(this.container.client.token as string, "[Censored]");
+            .replace(this.container.client.token!, "[Censored]");
         try {
             let { evaled } = await this.parseEval(eval(code)) /* eslint-disable-line */
             if (typeof evaled !== "string") evaled = util.inspect(evaled, { depth: 0 });

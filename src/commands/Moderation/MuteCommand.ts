@@ -18,7 +18,7 @@ export class clientCommand extends SubCommandPluginCommand {
             return message.reply({
                 embeds: [
                     new MessageEmbed()
-                        .setDescription(`⚠ | Please mention member / input valid user id`)
+                        .setDescription("⚠ | Please mention member / input valid user id")
                         .setColor(botEmbedColor)
                 ]
             });
