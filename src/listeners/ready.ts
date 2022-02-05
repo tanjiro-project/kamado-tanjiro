@@ -23,7 +23,7 @@ export class readyEvent extends Listener {
                 continue;
             }
         } else if (!botOwners.includes(developerId?.owner?.id!)) { botOwners.push(developerId?.owner?.id!); }
-        
+
         await createConnection({
             database: "tanjiroDatabases",
             entities: [`${resolve(__dirname, "..", "entities")}/**/*.ts`, `${resolve(__dirname, "..", "entities")}/**/*.js`],
