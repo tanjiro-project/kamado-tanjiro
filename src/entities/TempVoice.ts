@@ -17,4 +17,7 @@ export class TempVoice {
 
     @Column("string")
     public channelId!: Snowflake;
+
+    @Column("string")
+    public taskId?: string;
 }

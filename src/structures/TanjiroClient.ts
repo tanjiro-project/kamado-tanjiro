@@ -1,12 +1,14 @@
 import { SapphireClient, SapphireClientOptions } from "@sapphire/framework";
 import { Intents } from "discord.js";
 import { join } from "path";
-import { Connection } from "typeorm";
 import { GuildDatabaseManager } from "../databases/GuildDatabaseManager";
 import { GuildRoleDatabaseManager } from "../databases/GuildRoleDatabaseManager";
 import { MutedUserDatabaseManager } from "../databases/MutedUserDatabaseManager";
 import { TempVoiceDatabaseManager } from "../databases/TemporaryChannelDatabaseManager";
 import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
+
+import { ScheduledTaskRedisStrategy } from "@sapphire/plugin-scheduled-tasks/register-redis";
+import "@sapphire/plugin-hmr/register";
 
 export class TanjiroClient extends SapphireClient {
     public constructor(clientOptions?: SapphireClientOptions) {
@@ -22,11 +24,27 @@ export class TanjiroClient extends SapphireClient {
             partials: ["GUILD_MEMBER", "REACTION", "MESSAGE"],
             intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
             typing: true,
+            tasks: {
+                strategy: new ScheduledTaskRedisStrategy({
+                    bull: {
+                        redis: {
+                            host: process.env.REDIS_HOST,
+                            port: parseInt(process.env.REDIS_PORT!),
+                            password: process.env.REDIS_PASSWORD,
+                            username: process.env.REDIS_USERNAME
+                        },
+                        defaultJobOptions: {
+                            attempts: 3,
+                            removeOnComplete: true,
+                            removeOnFail: true
+                        }
+                    }
+                })
+            },
             ...clientOptions
         });
     }
 
-    public connection!: Connection;
     public databases = {
         guilds: new GuildDatabaseManager(),
         warn: new WarnDatabaseManager(),
@@ -45,6 +63,5 @@ declare module "@sapphire/framework" {
             mutedUser: MutedUserDatabaseManager;
             guildRole: GuildRoleDatabaseManager;
         };
-        connection: Connection;
     }
 }

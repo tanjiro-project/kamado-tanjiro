@@ -23,7 +23,8 @@ export class readyEvent extends Listener {
                 continue;
             }
         } else if (!botOwners.includes(developerId?.owner?.id!)) { botOwners.push(developerId?.owner?.id!); }
-        this.container.client.connection = await createConnection({
+        
+        await createConnection({
             database: "tanjiroDatabases",
             entities: [`${resolve(__dirname, "..", "entities")}/**/*.ts`, `${resolve(__dirname, "..", "entities")}/**/*.js`],
             type: "mongodb",
