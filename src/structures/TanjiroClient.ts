@@ -9,6 +9,7 @@ import { WarnDatabaseManager } from "../databases/WarnDatabaseManager";
 
 import { ScheduledTaskRedisStrategy } from "@sapphire/plugin-scheduled-tasks/register-redis";
 import "@sapphire/plugin-hmr/register";
+import { TagDatabaseManager } from "../databases/TagDatabaseManager";
 
 export class TanjiroClient extends SapphireClient {
     public constructor(clientOptions?: SapphireClientOptions) {
@@ -50,7 +51,8 @@ export class TanjiroClient extends SapphireClient {
         warn: new WarnDatabaseManager(),
         tempVoice: new TempVoiceDatabaseManager(),
         mutedUser: new MutedUserDatabaseManager(),
-        guildRole: new GuildRoleDatabaseManager()
+        guildRole: new GuildRoleDatabaseManager(),
+        tag: new TagDatabaseManager()
     };
 }
 
@@ -62,6 +64,7 @@ declare module "@sapphire/framework" {
             tempVoice: TempVoiceDatabaseManager;
             mutedUser: MutedUserDatabaseManager;
             guildRole: GuildRoleDatabaseManager;
+            tag: TagDatabaseManager;
         };
     }
 }

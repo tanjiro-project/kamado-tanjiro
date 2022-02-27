@@ -25,7 +25,7 @@ export class clientCommand extends Command {
 
         const categories = [...new Set(this.container.stores.get("commands").map(x => x.fullCategory[x.fullCategory.length - 1]))];
         const embed = new MessageEmbed()
-            .setAuthor(`❯ ${this.container.client.user?.username} command(s) list`, this.container.client.user?.displayAvatarURL(), "https://nezukochan.tech")
+            .setAuthor(`❯ ${this.container.client.user?.username} command(s) list`, this.container.client.user?.displayAvatarURL(), "https://nezu.my.id")
             .setDescription("A list of available commands.")
             .setColor(botEmbedColor);
         for (const category of categories) {
