@@ -5,7 +5,7 @@
   "dependencies": {
     "@discordjs/builders": "0.12.0",
     "@sapphire/decorators": "4.2.4",
-    "@sapphire/discord.js-utilities": "^4.8.1",
+    "@sapphire/discord.js-utilities": "4.8.1",
     "@sapphire/framework": "2.4.0",
     "@sapphire/plugin-hmr": "1.1.1",
     "@sapphire/plugin-scheduled-tasks": "2.2.0",
