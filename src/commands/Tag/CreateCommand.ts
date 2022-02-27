@@ -4,7 +4,8 @@ import { Message, MessageEmbed } from "discord.js";
 import { botEmbedColor } from "../../config";
 
 @ApplyOptions<CommandOptions>({
-    name: "create"
+    name: "create",
+    quotes: []
 })
 
 export class CreateCommand extends Command {
