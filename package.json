@@ -4,7 +4,7 @@
   "description": "A discord moderation bot.",
   "dependencies": {
     "@discordjs/builders": "0.12.0",
-    "@sapphire/decorators": "4.2.6",
+    "@sapphire/decorators": "4.3.4",
     "@sapphire/discord.js-utilities": "4.8.2",
     "@sapphire/framework": "2.4.1",
     "@sapphire/plugin-hmr": "1.1.1",
