@@ -19,7 +19,7 @@
     "dotenv": "16.0.0",
     "mongodb": "3.7.3",
     "petitio": "1.4.0",
-    "typeorm": "0.2.44"
+    "typeorm": "0.3.6"
   },
   "scripts": {
     "start": "ts-node -r dotenv/config src",
