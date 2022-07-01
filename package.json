@@ -11,7 +11,7 @@
     "@sapphire/plugin-scheduled-tasks": "2.3.3",
     "@sapphire/plugin-subcommands": "2.2.0",
     "@sapphire/stopwatch": "1.4.1",
-    "@sapphire/utilities": "3.6.2",
+    "@sapphire/utilities": "3.7.0",
     "bull": "4.7.0",
     "chalk": "4.1.2",
     "common-tags": "1.8.2",
