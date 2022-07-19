@@ -5,6 +5,8 @@
 
 [![Nezuko Community](https://discordapp.com/api/guilds/785715968608567297/embed.png?style=banner2)](https://discord.gg/b47d4AqxFR)
 
+## Depcrecation Notice
+This project will be merged to [NezukoChan](https://nezu.my.id) slowly. dont worry. our project is transparent. will still open source to public
 
 ## Author
 TanjiroSan © [KagChi](https://github.com/KagChi)
